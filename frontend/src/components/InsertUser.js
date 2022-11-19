@@ -1,11 +1,52 @@
-import React from "react";
+import React, {useState} from "react";
 import pic from "../assets/abstract-art-grey-i36688.jpg";
-
-
+import axios from "axios";
 
 export default function InsertUser(){  
+    const[ID,setID] = useState("");
+    const[name,setname] = useState("");
+    const[description,setdescription] = useState("");
+    const[timeDuration,settimeDuration] = useState("");
+    const[parentCard,setparentCard] = useState("");
+    const[role,setrole] = useState("");
+    const[city,setcity] = useState("");
+    const[province,setprovince] = useState("");
+    const[country,setcountry] = useState("");
 
+    function sendData(e){
+        //validations
+        
 
+        e.preventDefault();//to prevent normal behavior of submit
+
+        const arr = [{
+            city : city,
+            province : province,
+            country : country
+        }]//array of attributes
+
+        console.log(arr);
+
+        const newUser = {
+            ID,
+            name,
+            description,
+            timeDuration,
+            parentCard,
+            role,
+            arr
+        }
+        console.log(newUser);
+
+        axios.post("http://localhost:8070/user/addUser", newUser).then(()=>{
+            alert("New user added successfully!");
+            window.location = `/addUser`;
+        }).catch((err)=>{
+            alert(err.response.data.message);
+            console.log(err.message);
+        })
+
+    }
 
  return(
    <div className="reg">
@@ -30,35 +71,47 @@ export default function InsertUser(){
                     </td>
                 </div>
                 <td>
-                    <form className="reg-form" id="reg-form">
+                    <form className="reg-form" id="reg-form" onSubmit={sendData}>
                         <div className="reg1">
                             <div className="reg2">
                                 <br/><br/>
          
                                     <div class="form-group">
                                     <label className="labels" for="ID">ID</label>
-                                    <input type="text" class="form-control" id="ID"/>
+                                    <input type="text" class="form-control" id="ID" onChange={(e)=>{
+                                            setID(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                     </div>
                                     <div class="form-group">
                                     <label className="labels" for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter name"/>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter name" onChange={(e)=>{
+                                            setname(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                     </div>
                             
                                 <div class="form-group">
                                     <label className="labels" for="description">Description</label>
-                                    <input type="text" class="form-control" id="description" placeholder="Enter a description"/>
+                                    <input type="text" class="form-control" id="description" placeholder="Enter a description" onChange={(e)=>{
+                                            setdescription(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                 </div>
                                 <div class="form-group">
                                     <label className="labels" for="timeDuration">Time Duration</label>
-                                    <input type="date" class="form-control" id="timeDuration"/>
+                                    <input type="date" class="form-control" id="timeDuration" onChange={(e)=>{
+                                            settimeDuration(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                 </div>
                                 <div class="form-group">
                                     <label className="labels" for="parentCard">Parent Card ID</label>
-                                    <input type="text" class="form-control" id="parentCard"/>
+                                    <input type="text" class="form-control" id="parentCard" onChange={(e)=>{
+                                            setparentCard(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                 </div>
                                 <div class="form-group">
                                 <label className="labels" for="role">Role</label>
-                                <select id="role" class="form-control">
+                                <select id="role" class="form-control" onChange={(e)=>{
+                                            setrole(e.target.value);//updating state using value taken from the form 
+                                        }} required>
                                         <option selected>Choose</option>
                                         <option>Admin</option>
                                         <option>Manager</option>
@@ -69,11 +122,15 @@ export default function InsertUser(){
                                 <div class="form-row">
                                     <div class="form-group">
                                     <label className="labels" for="city">City</label>
-                                    <input type="text" class="form-control" id="city" placeholder="Enter city"/>
+                                    <input type="text" class="form-control" id="city" placeholder="Enter city" onChange={(e)=>{
+                                            setcity(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                     </div>
                                     <div class="form-group">
                                     <label className="labels" for="province">Province</label>
-                                    <select id="province" class="form-control">
+                                    <select id="province" class="form-control"
+                                    onChange={(e)=>{setprovince(e.target.value);//updating state using value taken from the form 
+                                            }} required>
                                         <option selected>Choose...</option>
                                         <option>Wester province</option>
                                         <option>Southern province</option>
@@ -82,7 +139,9 @@ export default function InsertUser(){
                                     </div>
                                     <div class="form-group">
                                     <label className="labels" for="country">Country</label>
-                                    <input type="text" class="form-control" id="country" placeholder="Enter country"/>
+                                    <input type="text" class="form-control" id="country" placeholder="Enter country" onChange={(e)=>{
+                                            setcountry(e.target.value);//updating state using value taken from the form 
+                                        }} required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
