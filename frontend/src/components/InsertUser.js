@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import pic from "../assets/abstract-art-grey-i36688.jpg";
 import axios from "axios";
 
+
 export default function InsertUser(){  
     const[ID,setID] = useState("");
     const[name,setname] = useState("");
@@ -14,9 +15,6 @@ export default function InsertUser(){
     const[country,setcountry] = useState("");
 
     function sendData(e){
-        //validations
-        
-
         e.preventDefault();//to prevent normal behavior of submit
 
         const arr = [{
@@ -38,8 +36,9 @@ export default function InsertUser(){
         }
         console.log(newUser);
 
+        //http://localhost:3000/addUser 
         axios.post("http://localhost:8070/user/addUser", newUser).then(()=>{
-            alert("New user added successfully!");
+            alert("New User Successfully Added !");
             window.location = `/addUser`;
         }).catch((err)=>{
             alert(err.response.data.message);
