@@ -4,7 +4,9 @@ let User = require("../models/User");
 
 //insert new user route
 router.route("/adduser").post((req,res)=>{
-    
+    //var pid ;
+    //User.findOne({$orderby : {$last : ID}},{ID:1, _id:0});
+    //console.log(pid);
 
     var attriArray = [];//to store array of attributes
 
